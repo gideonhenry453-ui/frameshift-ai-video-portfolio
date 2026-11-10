@@ -72,3 +72,45 @@ html,body{max-width:100%;overflow-x:clip}
 #work::before{opacity:.15!important}
 .hero-visual>video{display:none}
 }
+
+
+/* ORBIT CORRECTION / cards travel an actual visible ellipse, not a depth-only dolly */
+.hero-visual .lab-camera{transform:translate3d(var(--lab-pointer-x-px,0px),var(--lab-pointer-y-px,0px),0) scale(1)!important}
+.hero-visual .lab-stage{transform:none!important}
+.hero-visual .orbit-scene{z-index:2;transform:none!important;opacity:1!important}
+.hero-visual .orbit-core{width:35%;top:39%;left:32.5%;z-index:1}
+.hero-visual .orbit-ring{z-index:2}
+.hero-visual .showcase-stage{position:absolute;inset:0;z-index:6;transform:none!important;perspective:none;overflow:visible}
+.hero-visual .showcase-card,
+.hero-visual .showcase-card.one,
+.hero-visual .showcase-card.two,
+.hero-visual .showcase-card.three{
+  position:absolute;left:50%;top:54%;right:auto;bottom:auto;
+  width:clamp(105px,28%,175px);aspect-ratio:4/5;
+  margin:0;translate:none;animation:none!important;
+  transform:translate3d(var(--orbit-x,0px),var(--orbit-y,0px),0) translate(-50%,-50%) rotateY(var(--orbit-ry,0deg)) rotateZ(var(--orbit-rz,0deg)) scale(var(--orbit-scale,1))!important;
+  opacity:var(--orbit-opacity,1);filter:brightness(var(--orbit-brightness,1));
+  z-index:var(--orbit-layer,10);will-change:transform,opacity,filter;
+  border-color:#d1fb75b5;box-shadow:0 12px 26px #000c,0 22px 48px #0009,0 0 14px #d1fb7529;
+  backface-visibility:visible;transform-style:flat;
+}
+.hero-visual .showcase-card .sprite-thumb{background-size:cover!important;transform:none!important}
+.hero-visual .hero-placeholder>strong{z-index:20;pointer-events:none}
+.hero-visual .hero-placeholder>span:not(.sprite-thumb){z-index:20}
+.hero-visual .hero-bottom{z-index:21}
+.hero-visual .orbit-track{position:absolute;left:50%;top:54%;width:var(--orbit-track-w,82%);height:var(--orbit-track-h,40%);border:1px solid #d1fb7566;border-radius:50%;transform:translate(-50%,-50%) rotate(-13deg);z-index:3;pointer-events:none;box-shadow:0 0 16px #d1fb751a,inset 0 0 16px #d1fb7510}
+.hero-visual .orbit-track::before{content:"";position:absolute;inset:7px;border:1px dashed #d1fb7528;border-radius:50%}
+.hero-visual .orbit-track::after{content:"";position:absolute;left:50%;top:-3px;width:6px;height:6px;border-radius:50%;background:#d1fb75;box-shadow:0 0 15px #d1fb75}
+.hero-visual .orbit-scene{pointer-events:none}
+.hero-visual .orbit-core{box-shadow:inset -30px -32px 36px #020807e0,inset 11px 12px 27px #f2ffb580,0 0 48px #d1fb754d}
+.hero-visual .showcase-card>span:last-child{font-size:9px;letter-spacing:.6px;white-space:nowrap}
+@media(max-width:680px){
+ .hero-visual .lab-camera{transform:none!important}
+ .hero-visual .orbit-track{width:83%;height:35%}
+ .hero-visual .showcase-card,.hero-visual .showcase-card.one,.hero-visual .showcase-card.two,.hero-visual .showcase-card.three{width:clamp(92px,26%,130px)}
+ .hero-visual .orbit-core{width:36%;left:32%;top:41%}
+}
+@media(prefers-reduced-motion:reduce){
+ .hero-visual .showcase-card{animation:none!important;transition:none!important}
+ .hero-visual .lab-camera,.hero-visual .lab-stage{transform:none!important}
+}
