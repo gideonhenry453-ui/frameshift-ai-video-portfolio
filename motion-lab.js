@@ -53,7 +53,7 @@ function pointer(e){
 function resetPointer(){target.mx=0;target.my=0;requestTick()}
 function requestTick(){if(running)return;running=true;requestAnimationFrame(tick)}
 function tick(){
- const factor=coarse?.14:.095;
+ const factor=coarse ? 0.14 : 0.095;
  state.progress+=(target.progress-state.progress)*factor;
  state.mx+=(target.mx-state.mx)*.085;
  state.my+=(target.my-state.my)*.085;
@@ -65,6 +65,28 @@ function tick(){
  root.setProperty('--lab-camera-y',(-smooth*34).toFixed(2)+'px');
  root.setProperty('--lab-mouse-x',state.mx.toFixed(4));
  root.setProperty('--lab-mouse-y',state.my.toFixed(4));
+ root.setProperty('--lab-pointer-x-px',(state.mx*9).toFixed(2)+'px');
+ root.setProperty('--lab-rotate-x',(-state.my*3).toFixed(2)+'deg');
+ root.setProperty('--lab-rotate-y',(state.mx*4).toFixed(2)+'deg');
+ root.setProperty('--lab-camera-scale',(1+smooth*.20).toFixed(4));
+ root.setProperty('--lab-mobile-scale',(1+smooth*.07).toFixed(4));
+ root.setProperty('--lab-mobile-y',(-smooth*13).toFixed(2)+'px');
+ root.setProperty('--lab-orb-scale',(1+smooth*.14).toFixed(4));
+ root.setProperty('--lab-mobile-orb-scale',(1+smooth*.05).toFixed(4));
+ root.setProperty('--lab-orb-x',(-state.mx*9).toFixed(2)+'px');
+ root.setProperty('--lab-orb-y',(-state.my*6).toFixed(2)+'px');
+ root.setProperty('--lab-orb-opacity',(1-smooth*.12).toFixed(4));
+ root.setProperty('--lab-overlay-opacity',(.7+smooth*.23).toFixed(4));
+ work.style.setProperty('--lab-work-shift',((1-smooth)*-45).toFixed(2)+'px');
+ const cards=stage.querySelectorAll('.showcase-card');
+ cards.forEach(card=>{
+  const v=getComputedStyle(card);
+  const num=(key)=>Number.parseFloat(v.getPropertyValue(key))||0;
+  card.style.setProperty('--card-translate-x',(state.mx*num('--card-pointer-x')+smooth*num('--card-drift-x')).toFixed(2)+'px');
+  card.style.setProperty('--card-translate-y',(state.my*num('--card-pointer-y')+smooth*num('--card-drift-y')).toFixed(2)+'px');
+  card.style.setProperty('--card-translate-z',(smooth*num('--card-depth')).toFixed(2)+'px');
+ });
+
  work.style.setProperty('--lab-work-glow',clamp(smooth*1.3,0,1).toFixed(3));
  const remaining=Math.max(Math.abs(target.progress-state.progress),Math.abs(target.mx-state.mx),Math.abs(target.my-state.my));
  if(remaining>.001){requestAnimationFrame(tick)}else{running=false}
