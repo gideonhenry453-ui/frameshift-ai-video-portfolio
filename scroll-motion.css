@@ -12,17 +12,15 @@ header.wrap.scrolled{border-bottom-color:#d1fb755e;background:rgba(12,15,16,.95)
 .motion-on .work-card.scroll-reveal{transition:opacity .68s,transform .75s cubic-bezier(.22,1,.36,1),filter .35s}
 .motion-on .work-card.scroll-reveal.revealed:not(:hover){transform:translate3d(0,0,0)}
 .hero h1{will-change:transform}
-.hero-visual .showcase-stage{transform:translate3d(0,calc(var(--scroll-shift) * .24),0);will-change:transform}
-.hero-visual .hero-placeholder>strong{transform:translate3d(0,calc(var(--scroll-shift) * -.075),0)}
 .ticker .inner{animation-duration:32s}
 .motion-on .section-head h2 em,.motion-on .about-copy h2 em{display:inline-block;transition:transform .6s cubic-bezier(.2,.8,.2,1)}
 .motion-on .section-head:hover h2 em,.motion-on .about-copy:hover h2 em{transform:translateY(-5px)}
 .section{content-visibility:auto;contain-intrinsic-size:auto 960px}
-@media(max-width:680px){.motion-on .scroll-reveal.pending{transform:translate3d(0,18px,0)}.hero-visual .showcase-stage,.hero-visual .hero-placeholder>strong{transform:none!important}.section{content-visibility:visible}}
+@media(max-width:680px){.motion-on .scroll-reveal.pending{transform:translate3d(0,18px,0)}.section{content-visibility:visible}}
 @media(prefers-reduced-motion:reduce){
 html{scroll-behavior:auto!important}
 .scroll-progress{display:none}
 .motion-on .scroll-reveal,.motion-on .scroll-reveal.pending,.motion-on .scroll-reveal.revealed{opacity:1!important;transform:none!important;transition:none!important}
-.hero-visual .showcase-stage,.hero-visual .hero-placeholder>strong{transform:none!important}
+
 header.wrap{backdrop-filter:none;-webkit-backdrop-filter:none}
 }
