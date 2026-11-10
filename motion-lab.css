@@ -1,0 +1,33 @@
+
+/* Motion-studio finish: layered 3D orb, track, section transitions */
+:root{--motion-scroll:0;--motion-pointer-x:0deg;--motion-pointer-y:0deg}
+.hero-visual{isolation:isolate;transform-style:preserve-3d}
+.hero-visual .hero-placeholder{overflow:hidden}
+.orbit-scene{position:absolute;inset:0;pointer-events:none;perspective:1100px;z-index:0;opacity:.92}
+.orbit-core{width:43%;aspect-ratio:1;position:absolute;top:31%;left:31%;border-radius:50%;background:radial-gradient(circle at 28% 23%,#ffffffa8 0,#baff5f73 10%,#647f42 25%,#0a1412 49%,#020705 73%),conic-gradient(from 20deg,#c4fa7850,#0b1719,#f0f8c6,#152619,#c4fa7850);box-shadow:inset -36px -27px 35px #000b,inset 15px 14px 30px #dcff7380,0 0 80px #d1fb7526;transform:translate3d(0,0,-40px);filter:saturate(1.2);animation:orbBreathe 7s ease-in-out infinite alternate}
+.orbit-ring{position:absolute;top:21%;left:16%;width:68%;aspect-ratio:1;border:3px solid transparent;border-top-color:#e8ffbccc;border-bottom-color:#a8e37377;border-left-color:#d1fb7580;border-radius:50%;transform-style:preserve-3d;box-shadow:0 0 16px #d1fb7549,inset 0 0 12px #d1fb752b}
+.orbit-ring.r1{animation:orbitOne 16s linear infinite;transform:rotateX(74deg) rotateZ(22deg)}
+.orbit-ring.r2{animation:orbitTwo 22s linear infinite;transform:rotateY(72deg) rotateZ(36deg);width:58%;top:26%;left:21%}
+.orbit-ring.r3{width:83%;top:14%;left:8%;border-width:1px;opacity:.65;animation:orbitThree 24s linear infinite}
+.orbit-light{position:absolute;width:19%;height:19%;left:8%;top:20%;border-radius:50%;background:#d1fb7533;filter:blur(45px);animation:orbBreathe 7s ease-in-out infinite alternate}
+@keyframes orbBreathe{from{transform:translate3d(0,0,-40px) scale(.95);opacity:.8}to{transform:translate3d(0,-7px,-40px) scale(1.03);opacity:1}}
+@keyframes orbitOne{from{transform:rotateX(74deg) rotateZ(0deg)}to{transform:rotateX(74deg) rotateZ(360deg)}}
+@keyframes orbitTwo{from{transform:rotateY(72deg) rotateZ(0deg)}to{transform:rotateY(72deg) rotateZ(-360deg)}}
+@keyframes orbitThree{from{transform:rotateX(58deg) rotateY(20deg) rotateZ(0)}to{transform:rotateX(58deg) rotateY(20deg) rotateZ(360deg)}}
+.motion-counter{position:absolute;right:25px;top:25px;z-index:7;color:#e5fcc8;font:600 10px "Space Grotesk",sans-serif;letter-spacing:2px;text-shadow:0 2px 8px #000}
+.motion-counter:before{content:"◉";color:#d1fb75;margin-right:10px;animation:blinkLed 2s ease infinite}
+@keyframes blinkLed{50%{opacity:.28}}
+.hero-visual .showcase-stage{z-index:2;transform-style:preserve-3d}
+.hero-visual .showcase-card{box-shadow:0 25px 60px #000a,0 0 25px #a9e37422;outline:1px solid #d1fb755c;outline-offset:1px;transition:filter .5s}
+.hero-visual .showcase-card.one{width:42%;right:6%;top:34%}
+.hero-visual .showcase-card.two{width:29%;right:60%;top:49%}
+.hero-visual .showcase-card.three{width:29%;right:27%;top:62%}
+.hero-visual .hero-placeholder strong{z-index:5;position:relative;text-shadow:0 7px 32px #000b}
+.hero-visual .hero-placeholder span:not(.sprite-thumb){z-index:5}
+.motion-on .section-head.scroll-reveal.revealed h2{animation:motionFocus .9s ease both}
+@keyframes motionFocus{from{letter-spacing:-.10em;filter:blur(3px)}to{letter-spacing:-.065em;filter:blur(0)}}
+.work-card .preview{transition:box-shadow .38s,border-color .38s}
+.work-card:hover .preview{box-shadow:0 30px 65px #0008,0 0 0 1px #d1fb7588;border-color:#d1fb75}
+.motion-billboard{font:700 10px "Space Grotesk",sans-serif;color:#d1fb75;letter-spacing:3px;text-transform:uppercase;position:absolute;left:27px;bottom:84px;z-index:7;border-left:2px solid #d1fb75;padding-left:11px}
+@media(max-width:680px){.hero-visual .showcase-card.one{width:42%;top:40%;right:5%}.hero-visual .showcase-card.two{width:31%;right:60%;top:53%}.hero-visual .showcase-card.three{width:30%;right:25%;top:67%}.orbit-core{width:52%;left:24%;top:39%}.orbit-ring{top:33%}.orbit-ring.r2{top:40%}.orbit-ring.r3{top:27%}.motion-billboard{left:20px;bottom:72px}.motion-counter{right:18px;top:16px}}
+@media(prefers-reduced-motion:reduce){.orbit-ring,.orbit-core,.orbit-light,.motion-counter:before{animation:none!important}.motion-on .section-head.scroll-reveal.revealed h2{animation:none!important}}
