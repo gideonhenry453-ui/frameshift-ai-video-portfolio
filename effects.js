@@ -8,7 +8,7 @@ const ids=["vege-flumi-ugc","beauty-v2-routine","growboat-lifestyle","avatar-dri
 const lookup=new Map(ids.map((id,i)=>[id,i]));
 const reduced=matchMedia("(prefers-reduced-motion: reduce)").matches;
 const finePointer=matchMedia("(hover: hover) and (pointer: fine)").matches;
-function thumb(id) {const index=lookup.get(id)??0;const x=index%5,y=Math.floor(index/5);const node=document.createElement("span");node.className="sprite-thumb";node.style.backgroundPosition=(x*25)+"% "+(y*(100/3))+"%";node.setAttribute("aria-hidden","true");return node;}
+function thumb(id) {const index=lookup.get(id)??0;const x=index%5,y=Math.floor(index/5);const node=document.createElement("span");node.className="sprite-thumb";node.style.backgroundImage='url("/posters/'+id+'.webp")';node.style.backgroundSize="cover";node.style.backgroundPosition="center center";node.setAttribute("aria-hidden","true");return node;}
 function setupCards(){
 gallery.querySelectorAll(".work-card").forEach(card=>{
 if(card.dataset.activated)return;
