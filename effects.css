@@ -1,0 +1,57 @@
+
+/* FRAME/SHIFT — 3D motion and media preview enhancement */
+:root{--stageGlow:rgba(206,250,126,.19)}
+body{background:radial-gradient(900px 740px at 85% 9%,#1b2820 0%,transparent 72%),#0c0f10}
+.brand{position:relative}
+.hero-visual{perspective:1050px;isolation:isolate;box-shadow:inset 0 0 0 1px rgba(220,255,175,.08),0 24px 80px #0005}
+.hero-visual::before{content:"";position:absolute;inset:-70%;transform:rotateX(67deg) rotateZ(-20deg) translateY(43%);background-image:linear-gradient(to right,rgba(198,248,135,.13) 1px,transparent 1px),linear-gradient(to bottom,rgba(198,248,135,.13) 1px,transparent 1px);background-size:72px 72px;opacity:.7;z-index:0;pointer-events:none}
+.hero-visual::after{z-index:3}
+.hero-placeholder{position:absolute;inset:0;z-index:1;align-items:stretch;justify-content:center;padding:8%;pointer-events:none;background:radial-gradient(ellipse at center,#ffffff0a,transparent 66%)}
+.hero-placeholder strong{position:relative;z-index:2;font-size:clamp(37px,5.7vw,92px);line-height:.91;letter-spacing:-.095em;max-width:450px;text-align:left;text-shadow:0 15px 40px #060806a1}
+.hero-placeholder span{position:relative;z-index:3;text-align:left;letter-spacing:2px;text-transform:uppercase;font-size:10px;margin-top:14px}
+.showcase-stage{position:absolute;inset:0;z-index:1;transform-style:preserve-3d;pointer-events:none}
+.showcase-card{position:absolute;aspect-ratio:4/5;width:40%;border-radius:13px;overflow:hidden;background:#32433b;box-shadow:0 16px 25px #0009,0 50px 85px #000a;border:1px solid #eeffdc55;backface-visibility:hidden;transform-style:preserve-3d;transform:perspective(1000px) rotateY(-15deg) rotateX(8deg);animation:cardFloat 8s ease-in-out infinite}
+.showcase-card::before{content:"";position:absolute;inset:0;background:linear-gradient(155deg,transparent 25%,#0000 50%,#0009 100%);z-index:2}
+.showcase-card .sprite-thumb{position:absolute;inset:0;display:block;background-repeat:no-repeat;background-size:500% 400%;filter:saturate(1.23);transform:scale(1.1)}
+.showcase-card span{position:absolute;z-index:3;bottom:16px;left:15px;color:#fff;font-weight:700;font:700 11px "Space Grotesk",sans-serif;letter-spacing:1.5px;text-shadow:0 2px 10px black}
+.showcase-card.one{width:51%;right:13%;top:10%;transform:rotateY(-14deg) rotateX(8deg) translateZ(45px);animation-delay:-2s}
+.showcase-card.two{width:36%;right:54%;top:47%;transform:rotateY(16deg) rotateX(-8deg) translateZ(95px);animation-delay:-4s}
+.showcase-card.three{width:28%;right:1%;top:57%;transform:rotateY(-24deg) rotateX(10deg) translateZ(140px);animation-delay:-6s}
+@keyframes cardFloat{0%,100%{translate:0 0}50%{translate:0 -18px}}
+.hero-placeholder{justify-content:flex-start;padding-top:12%}
+.hero-placeholder strong{font-size:clamp(35px,4.7vw,70px);max-width:75%;z-index:3}
+.hero-visual video{z-index:4}
+.hero-visual .hero-bottom{z-index:6}
+.hero-visual .hero-placeholder[style*="opacity: 0"]{transition:opacity .6s}
+.gallery{perspective:1400px}
+.work-card{transform-style:preserve-3d;transform:perspective(1000px) rotateX(var(--tilt-x,0deg)) rotateY(var(--tilt-y,0deg)) translateY(var(--lift,0px));transition:transform .32s cubic-bezier(.2,.75,.2,1),filter .35s;will-change:transform}
+.work-card:hover{--lift:-9px;filter:drop-shadow(0 18px 24px #0008)}
+.work-card .preview{isolation:isolate;overflow:hidden;border:1px solid #83998236;background:#253027;box-shadow:0 10px 38px #0003}
+.work-card .preview .sprite-thumb{position:absolute;inset:-1px;z-index:0;background-repeat:no-repeat;background-size:500% 400%;transform:scale(1.06);transition:transform .7s cubic-bezier(.18,.68,.22,1),filter .6s;filter:saturate(1.14) contrast(1.05)}
+.work-card:hover .preview .sprite-thumb{transform:scale(1.17);filter:saturate(1.32) contrast(1.06)}
+.work-card .preview::after{content:"";position:absolute;z-index:3;inset:0;pointer-events:none;background:linear-gradient(122deg,transparent 20%,#ffffe20e 41%,transparent 62%),linear-gradient(0deg,#070c0eaa 0%,transparent 40%);opacity:.75;transition:opacity .3s}
+.work-card:hover .preview::after{opacity:.9}
+.work-card .preview>img{z-index:1}
+.work-card .preview .fallback{display:none}
+.work-card .card-num{z-index:4;left:17px;top:18px;background:#071006ad;border:1px solid #d1fb7566}
+.work-card .play{z-index:5;box-shadow:0 13px 45px #000c;transition:transform .45s,background .45s;transform:translateZ(35px)}
+.work-card:hover .play{transform:scale(1.2) translateZ(48px)}
+.work-card .preview .preview-label{position:absolute;bottom:16px;left:17px;z-index:5;border:1px solid #f8ffed7a;background:#081008a6;padding:9px 12px;border-radius:4px;font-size:10px;letter-spacing:1.8px;font-weight:700}
+.work-card .preview .card-video{position:absolute;inset:0;z-index:2;width:100%;height:100%;object-fit:cover;opacity:0;transition:opacity .35s}
+.work-card .preview .card-video.visible{opacity:1}
+.work-card .card-foot{padding:20px 2px 24px}
+.work-card .card-foot strong{font-size:19px;letter-spacing:-.03em}
+.work-card.tall .preview{aspect-ratio:4/4.3}
+.work-card .card-foot .arrow{transition:transform .3s}
+.work-card:hover .arrow{transform:translate(3px,-3px)}
+.filter{transition:background .18s,transform .18s}
+.filter:hover{transform:translateY(-2px)}
+.eyebrow{position:relative}
+.modal-poster{aspect-ratio:16/9;width:100%;display:flex;align-items:end;padding:28px;position:relative;overflow:hidden;background:#213128;border-radius:4px}
+.modal-poster .sprite-thumb{position:absolute;inset:0;background-size:500% 400%;background-repeat:no-repeat;filter:saturate(1.15)}
+.modal-poster::after{content:"";position:absolute;inset:0;background:linear-gradient(0deg,#050907c4,transparent 70%)}
+.modal-poster strong{font:700 clamp(28px,5vw,52px)/.95 "Space Grotesk",sans-serif;max-width:500px;position:relative;z-index:1;letter-spacing:-.06em}
+[hidden]{display:none!important}
+@media(min-width:681px){.work-card:focus-visible{transform:translateY(-8px)}}
+@media(max-width:680px){.showcase-card.one{width:53%;right:7%;top:16%}.showcase-card.two{width:38%;right:52%;top:52%}.showcase-card.three{width:32%;right:2%;top:59%}.hero-placeholder strong{font-size:51px;max-width:85%;text-align:left}.hero-visual{min-height:520px}.hero-placeholder{justify-content:flex-start;padding-top:11%}.work-card{will-change:auto}.work-card:hover{transform:none;filter:none}.work-card.tall .preview{aspect-ratio:4/3}}
+@media(prefers-reduced-motion:reduce){.showcase-card{animation:none!important}.work-card,.work-card .sprite-thumb{transition:none!important}}
