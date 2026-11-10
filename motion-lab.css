@@ -1,33 +1,74 @@
-
-/* Motion-studio finish: layered 3D orb, track, section transitions */
-:root{--motion-scroll:0;--motion-pointer-x:0deg;--motion-pointer-y:0deg}
-.hero-visual{isolation:isolate;transform-style:preserve-3d}
-.hero-visual .hero-placeholder{overflow:hidden}
-.orbit-scene{position:absolute;inset:0;pointer-events:none;perspective:1100px;z-index:0;opacity:.92}
-.orbit-core{width:43%;aspect-ratio:1;position:absolute;top:31%;left:31%;border-radius:50%;background:radial-gradient(circle at 28% 23%,#ffffffa8 0,#baff5f73 10%,#647f42 25%,#0a1412 49%,#020705 73%),conic-gradient(from 20deg,#c4fa7850,#0b1719,#f0f8c6,#152619,#c4fa7850);box-shadow:inset -36px -27px 35px #000b,inset 15px 14px 30px #dcff7380,0 0 80px #d1fb7526;transform:translate3d(0,0,-40px);filter:saturate(1.2);animation:orbBreathe 7s ease-in-out infinite alternate}
-.orbit-ring{position:absolute;top:21%;left:16%;width:68%;aspect-ratio:1;border:3px solid transparent;border-top-color:#e8ffbccc;border-bottom-color:#a8e37377;border-left-color:#d1fb7580;border-radius:50%;transform-style:preserve-3d;box-shadow:0 0 16px #d1fb7549,inset 0 0 12px #d1fb752b}
-.orbit-ring.r1{animation:orbitOne 16s linear infinite;transform:rotateX(74deg) rotateZ(22deg)}
-.orbit-ring.r2{animation:orbitTwo 22s linear infinite;transform:rotateY(72deg) rotateZ(36deg);width:58%;top:26%;left:21%}
-.orbit-ring.r3{width:83%;top:14%;left:8%;border-width:1px;opacity:.65;animation:orbitThree 24s linear infinite}
-.orbit-light{position:absolute;width:19%;height:19%;left:8%;top:20%;border-radius:50%;background:#d1fb7533;filter:blur(45px);animation:orbBreathe 7s ease-in-out infinite alternate}
-@keyframes orbBreathe{from{transform:translate3d(0,0,-40px) scale(.95);opacity:.8}to{transform:translate3d(0,-7px,-40px) scale(1.03);opacity:1}}
-@keyframes orbitOne{from{transform:rotateX(74deg) rotateZ(0deg)}to{transform:rotateX(74deg) rotateZ(360deg)}}
-@keyframes orbitTwo{from{transform:rotateY(72deg) rotateZ(0deg)}to{transform:rotateY(72deg) rotateZ(-360deg)}}
-@keyframes orbitThree{from{transform:rotateX(58deg) rotateY(20deg) rotateZ(0)}to{transform:rotateX(58deg) rotateY(20deg) rotateZ(360deg)}}
-.motion-counter{position:absolute;right:25px;top:25px;z-index:7;color:#e5fcc8;font:600 10px "Space Grotesk",sans-serif;letter-spacing:2px;text-shadow:0 2px 8px #000}
-.motion-counter:before{content:"◉";color:#d1fb75;margin-right:10px;animation:blinkLed 2s ease infinite}
-@keyframes blinkLed{50%{opacity:.28}}
-.hero-visual .showcase-stage{z-index:2;transform-style:preserve-3d}
-.hero-visual .showcase-card{box-shadow:0 25px 60px #000a,0 0 25px #a9e37422;outline:1px solid #d1fb755c;outline-offset:1px;transition:filter .5s}
-.hero-visual .showcase-card.one{width:42%;right:6%;top:34%}
-.hero-visual .showcase-card.two{width:29%;right:60%;top:49%}
-.hero-visual .showcase-card.three{width:29%;right:27%;top:62%}
-.hero-visual .hero-placeholder strong{z-index:5;position:relative;text-shadow:0 7px 32px #000b}
-.hero-visual .hero-placeholder span:not(.sprite-thumb){z-index:5}
-.motion-on .section-head.scroll-reveal.revealed h2{animation:motionFocus .9s ease both}
-@keyframes motionFocus{from{letter-spacing:-.10em;filter:blur(3px)}to{letter-spacing:-.065em;filter:blur(0)}}
-.work-card .preview{transition:box-shadow .38s,border-color .38s}
-.work-card:hover .preview{box-shadow:0 30px 65px #0008,0 0 0 1px #d1fb7588;border-color:#d1fb75}
-.motion-billboard{font:700 10px "Space Grotesk",sans-serif;color:#d1fb75;letter-spacing:3px;text-transform:uppercase;position:absolute;left:27px;bottom:84px;z-index:7;border-left:2px solid #d1fb75;padding-left:11px}
-@media(max-width:680px){.hero-visual .showcase-card.one{width:42%;top:40%;right:5%}.hero-visual .showcase-card.two{width:31%;right:60%;top:53%}.hero-visual .showcase-card.three{width:30%;right:25%;top:67%}.orbit-core{width:52%;left:24%;top:39%}.orbit-ring{top:33%}.orbit-ring.r2{top:40%}.orbit-ring.r3{top:27%}.motion-billboard{left:20px;bottom:72px}.motion-counter{right:18px;top:16px}}
-@media(prefers-reduced-motion:reduce){.orbit-ring,.orbit-core,.orbit-light,.motion-counter:before{animation:none!important}.motion-on .section-head.scroll-reveal.revealed h2{animation:none!important}}
+/* FRAME/SHIFT / MOTION LAB 001 — one continuous cinematic camera rig.
+   CSS 3D only. All scroll motion uses transforms and opacity. */
+:root{--lab-progress:0;--lab-mouse-x:0;--lab-mouse-y:0;--lab-camera-z:0px;--lab-camera-y:0px;--lab-fade:1;--lab-work-glow:0}
+html,body{max-width:100%;overflow-x:clip}
+.hero{position:relative;isolation:isolate}
+.hero-left{position:relative;z-index:2}
+.hero-left h1,.hero-left .hero-blurb,.hero-left .hero-actions{position:relative;z-index:2}
+.hero-visual{position:relative;isolation:isolate;perspective:1100px;transform-style:preserve-3d;background:radial-gradient(ellipse at 53% 54%,#2b422d 0%,#16221c 30%,#0c1011 73%),#0c0f10;overflow:hidden;contain:paint;box-shadow:inset 0 0 0 1px #d1fb7524,0 30px 85px #0007}
+.hero-visual::before{content:"";position:absolute;inset:-45%;z-index:0;pointer-events:none;opacity:.35;background-image:linear-gradient(90deg,#b7ed6a25 1px,transparent 1px),linear-gradient(#b7ed6a25 1px,transparent 1px);background-size:72px 72px;transform:perspective(750px) rotateX(68deg) translate3d(0,16%,0);transform-origin:center center}
+.hero-visual::after{content:"";position:absolute;inset:0;z-index:5;pointer-events:none;background:linear-gradient(180deg,#0c0f107a 0%,transparent 27%,transparent 65%,#0c0f10cb 100%);opacity:calc(.7 + var(--lab-progress)*.23)}
+.hero-visual .hero-placeholder{position:absolute;inset:0;z-index:2;overflow:hidden;pointer-events:none;padding:0;background:none;display:block}
+.hero-visual .hero-placeholder>strong{position:absolute;top:11%;left:7%;max-width:88%;font:700 clamp(34px,4.6vw,72px)/.93 "Space Grotesk",sans-serif;letter-spacing:-.08em;color:#f1f2ec;text-shadow:0 5px 32px #040805e6,0 2px 5px #040805;z-index:8;transform:none!important;opacity:1!important}
+.hero-visual .hero-placeholder>span:not(.sprite-thumb){position:absolute;top:29%;left:7%;z-index:8;color:#d4e2ce;font:700 10px "DM Sans",sans-serif;letter-spacing:2px;text-transform:uppercase;text-shadow:0 2px 9px #000}
+.lab-camera{position:absolute;inset:0;z-index:1;transform-style:preserve-3d;perspective:1000px;pointer-events:none;transform:translate3d(calc(var(--lab-mouse-x)*9px),calc(var(--lab-camera-y) + var(--lab-mouse-y)*7px),0) scale(calc(1 + var(--lab-progress)*.20));will-change:transform}
+.lab-stage{position:absolute;inset:0;transform-style:preserve-3d;transform:rotateX(calc(var(--lab-mouse-y)*-3deg)) rotateY(calc(var(--lab-mouse-x)*4deg)) translate3d(0,0,var(--lab-camera-z));will-change:transform}
+.lab-film{position:absolute;inset:0;z-index:1;pointer-events:none;opacity:.22;background:repeating-linear-gradient(90deg,transparent 0 48px,#d1fb751e 49px,#d1fb751e 50px,transparent 51px 98px);mask-image:linear-gradient(90deg,transparent,#000 30%,#000 70%,transparent)}
+.lab-film::before,.lab-film::after{content:"";position:absolute;left:-10%;right:-10%;height:1px;background:linear-gradient(90deg,transparent,#d1fb7599,transparent)}
+.lab-film::before{top:22%}.lab-film::after{bottom:19%}
+.lab-light{position:absolute;inset:5%;z-index:1;border-radius:50%;pointer-events:none;background:radial-gradient(circle at 49% 53%,#d1fb752e 0%,#9acc1e12 26%,transparent 62%);filter:blur(12px)}
+.lab-streak{position:absolute;left:6%;right:6%;top:61%;height:1px;z-index:2;background:linear-gradient(90deg,transparent,#d1fb75bb,transparent);opacity:.6;transform:rotate(-17deg);box-shadow:0 0 15px #d1fb7580}
+.lab-streak.second{top:42%;opacity:.27;transform:rotate(24deg)}
+.orbit-scene{position:absolute;inset:0;z-index:2;perspective:1000px;pointer-events:none;opacity:calc(1 - var(--lab-progress)*.12);transform:translate3d(calc(var(--lab-mouse-x)*-9px),calc(var(--lab-mouse-y)*-6px),0) scale(calc(1 + var(--lab-progress)*.14));transform-style:preserve-3d}
+.orbit-core{position:absolute;width:43%;aspect-ratio:1;top:34%;left:29%;border-radius:50%;background:radial-gradient(circle at 29% 24%,#f4ffda 0%,#d1fb75 5%,#9bd85d 14%,#3c633d 29%,#12251d 53%,#030a09 76%);box-shadow:inset -30px -32px 36px #020807e0,inset 11px 12px 27px #f2ffb580,0 0 48px #d1fb754d,0 0 95px #b2ff3321;transform:rotate(-18deg);animation:labOrbBreath 7s ease-in-out infinite alternate;will-change:transform}
+.orbit-core::after{content:"";position:absolute;inset:14%;border-radius:50%;background:linear-gradient(115deg,#e4ffbe22,transparent 50%);transform:rotate(20deg)}
+.orbit-ring{position:absolute;top:26%;left:20%;width:62%;aspect-ratio:1;border:2px solid transparent;border-top-color:#eaffc9bd;border-left-color:#a4dc6a8f;border-bottom-color:#d1fb754c;border-radius:50%;box-shadow:0 0 18px #d1fb7536;transform-style:preserve-3d}
+.orbit-ring.r1{animation:labRingA 19s linear infinite}
+.orbit-ring.r2{top:30%;left:23%;width:55%;animation:labRingB 25s linear infinite}
+.orbit-ring.r3{top:18%;left:12%;width:77%;border-width:1px;opacity:.6;animation:labRingC 30s linear infinite}
+.orbit-light{position:absolute;width:35%;height:35%;left:36%;top:33%;background:#b8ff6050;filter:blur(48px);border-radius:50%}
+@keyframes labOrbBreath{from{transform:rotate(-18deg) scale(.97)}to{transform:rotate(9deg) scale(1.035)}}
+@keyframes labRingA{from{transform:rotateX(72deg) rotateZ(0)}to{transform:rotateX(72deg) rotateZ(360deg)}}
+@keyframes labRingB{from{transform:rotateY(73deg) rotateZ(0)}to{transform:rotateY(73deg) rotateZ(-360deg)}}
+@keyframes labRingC{from{transform:rotateX(55deg) rotateY(22deg) rotateZ(0)}to{transform:rotateX(55deg) rotateY(22deg) rotateZ(360deg)}}
+.hero-visual .showcase-stage{position:absolute;inset:0;z-index:4;transform:none!important;perspective:1000px;transform-style:preserve-3d;pointer-events:none}
+.hero-visual .showcase-card{position:absolute;width:var(--card-w);aspect-ratio:4/5;left:var(--card-x);top:var(--card-y);right:auto;overflow:hidden;border:1px solid #d1fb758c;border-radius:9px;outline:1px solid #d1fb7525;outline-offset:3px;background:#161a1b;box-shadow:0 12px 25px #000a,0 42px 65px #0008,0 0 22px #d1fb751b;backface-visibility:hidden;transform-origin:center center;transform:translate3d(calc(var(--lab-mouse-x)*var(--card-pointer-x)*1px + var(--lab-progress)*var(--card-drift-x)*1px),calc(var(--lab-mouse-y)*var(--card-pointer-y)*1px + var(--lab-progress)*var(--card-drift-y)*1px),calc(var(--lab-progress)*var(--card-depth)*1px)) rotateY(var(--card-rotate-y)) rotateX(var(--card-rotate-x));animation:labFloat var(--float-time) ease-in-out infinite alternate;animation-delay:var(--float-delay);will-change:transform}
+@keyframes labFloat{from{translate:0 0}to{translate:0 -12px}}
+.hero-visual .showcase-card.one{--card-w:40%;--card-x:57%;--card-y:37%;--card-pointer-x:13;--card-pointer-y:10;--card-drift-x:24;--card-drift-y:-35;--card-depth:130;--card-rotate-y:-17deg;--card-rotate-x:7deg;--float-time:7s;--float-delay:-2s}
+.hero-visual .showcase-card.two{--card-w:31%;--card-x:5%;--card-y:50%;--card-pointer-x:-15;--card-pointer-y:-7;--card-drift-x:-30;--card-drift-y:18;--card-depth:210;--card-rotate-y:16deg;--card-rotate-x:-5deg;--float-time:8s;--float-delay:-4s}
+.hero-visual .showcase-card.three{--card-w:26%;--card-x:39%;--card-y:68%;--card-pointer-x:9;--card-pointer-y:13;--card-drift-x:13;--card-drift-y:24;--card-depth:265;--card-rotate-y:-11deg;--card-rotate-x:8deg;--float-time:6.5s;--float-delay:-3s}
+.hero-visual .showcase-card .sprite-thumb{position:absolute;inset:0;background-size:500% 400%;background-repeat:no-repeat;transform:none!important;filter:saturate(1.04)}
+.hero-visual .showcase-card>span:last-child{position:absolute;left:11px;bottom:10px;z-index:3;padding:6px 8px;background:#0b0f0cce;border:1px solid #d1fb754e;color:#f1f2ec;font:700 10px "Space Grotesk",sans-serif;letter-spacing:1px;text-shadow:0 1px 7px #000}
+.hero-visual .showcase-card::after{content:"";position:absolute;inset:0;z-index:2;pointer-events:none;background:linear-gradient(155deg,#f1ffe114,transparent 34%,#030a08a8)}
+.motion-counter,.motion-billboard{position:absolute;z-index:7;pointer-events:none;text-shadow:0 2px 12px #000}
+.motion-counter{top:22px;right:22px;font:700 10px "Space Grotesk",sans-serif;letter-spacing:2px;color:#d1fb75}
+.motion-counter::before{content:"●";font-size:9px;margin-right:8px;animation:labLed 2s ease-in-out infinite}
+@keyframes labLed{50%{opacity:.4}}
+.motion-billboard{left:22px;bottom:84px;border-left:2px solid #d1fb75;padding-left:11px;color:#d1fb75;font:700 10px "Space Grotesk",sans-serif;letter-spacing:2px}
+.hero-visual .hero-bottom{z-index:8}
+.hero-visual>video{z-index:0;opacity:0;pointer-events:none}
+#work{position:relative;isolation:isolate}
+#work::before{content:"";position:absolute;left:12%;right:12%;top:0;height:260px;pointer-events:none;z-index:-1;background:radial-gradient(ellipse at 50% 0,#b4ff563b,transparent 70%);opacity:var(--lab-work-glow);transform:translate3d(0,calc((1 - var(--lab-progress))*-45px),0)}
+.ticker{position:relative;z-index:1}
+@media(max-width:1050px){.hero-visual .hero-placeholder>strong{font-size:clamp(35px,5.4vw,62px)}.hero-visual .showcase-card.one{--card-w:42%}}
+@media(max-width:680px){
+.hero-visual{min-height:490px;perspective:800px}
+.hero-visual .hero-placeholder>strong{top:13%;font-size:clamp(37px,10vw,53px);max-width:92%}
+.hero-visual .hero-placeholder>span:not(.sprite-thumb){top:31%;font-size:9px}
+.hero-visual .showcase-card.one{--card-w:42%;--card-x:54%;--card-y:45%}
+.hero-visual .showcase-card.two{--card-w:33%;--card-x:4%;--card-y:54%}
+.hero-visual .showcase-card.three{--card-w:29%;--card-x:34%;--card-y:72%}
+.lab-stage{transform:none!important}
+.lab-camera{transform:translate3d(0,calc(var(--lab-camera-y)*.38),0) scale(calc(1 + var(--lab-progress)*.07))}
+.hero-visual .showcase-card{animation-duration:11s;transform:rotateY(var(--card-rotate-y)) rotateX(var(--card-rotate-x))!important}
+.orbit-scene{transform:scale(calc(1 + var(--lab-progress)*.05))}
+.motion-billboard{left:18px;bottom:75px;letter-spacing:1.3px;font-size:9px}
+.motion-counter{top:15px;right:15px}
+.lab-film{opacity:.13}
+}
+@media(prefers-reduced-motion:reduce){
+.lab-camera,.lab-stage,.orbit-scene,.hero-visual .showcase-card{transform:none!important;will-change:auto!important}
+.orbit-core,.orbit-ring,.hero-visual .showcase-card,.motion-counter::before{animation:none!important;translate:none!important}
+#work::before{opacity:.15!important}
+.hero-visual>video{display:none}
+}
